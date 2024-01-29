@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Form</title>
+</head>
+<body>
+    <h2>Contact Us</h2>
+    <form id="contactForm" action="/submit_contact_form" method="post">
+        <label for="customer_name">Name:</label><br>
+        <input type="text" id="customer_name" name="customer_name"><br><br>
+        
+        <label for="customer_email">Email:</label><br>
+        <input type="email" id="customer_email" name="customer_email"><br><br>
+        
+        <label for="customer_message">Message:</label><br>
+        <textarea id="message" name="customer_message" rows="4" cols="50"></textarea><br><br>
+        
+        <input type="button" value="Submit" onclick="submitForm()">
+    </form>
+    
+    <script>
+        function submitForm() {
+            var form = document.getElementById("contactForm");
+            var formData = new FormData(form);
+
+            fetch('https://zf80fb5ctj.execute-api.ca-central-1.amazonaws.com/default/jolly-contact-function', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form data submitted successfully');
+                } else {
+                    console.error('Form data submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
